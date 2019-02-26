@@ -134,15 +134,12 @@ class COCODetection(data.Dataset):
         path = osp.join(self.root, self.coco.loadImgs(img_id)[0]['file_name'])
 
         # assert osp.exists(path), 'Image path does not exist: {}'.format(path)
-        retry = 0
-        while(not(osp.exists(path))):
-            print("Retrying {}...".format(path))
-            time.sleep(10)
-            retry += 1
-            if retry > 10:
-                assert osp.exists(path), 'Image path does not exist: {}'.format(path)
+        if not osp.exists(path):
+            img = np.zeros((400, 600, 3), np.uint8)
+            print("Imagen ZERO creada...")
+        else:
+            img = cv2.imread(osp.join(self.root, path))
 
-        img = cv2.imread(osp.join(self.root, path))
         height, width, _ = img.shape
         if self.target_transform is not None:
             target = self.target_transform(target, width, height)
