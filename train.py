@@ -151,6 +151,7 @@ def train():
                                   pin_memory=True)
     # create batch iterator
     batch_iterator = iter(data_loader)
+    image_not_found = 0
     for iteration in range(args.start_iter, cfg['max_iter']):
         if args.visdom and iteration != 0 and (iteration % epoch_size == 0):
             update_vis_plot(epoch, loc_loss, conf_loss, epoch_plot, None,
@@ -166,6 +167,10 @@ def train():
 
         # load train data
         images, targets = next(batch_iterator)
+        if images is None or targets is None:
+            image_not_found += 1
+            print("Archivo no encontrado durante next(iterator) - # {}".format(image_not_found))
+            continue
 
         if args.cuda:
             images = Variable(images.cuda())
