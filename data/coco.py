@@ -93,7 +93,13 @@ class COCODetection(data.Dataset):
         self.root = osp.join(root, IMAGES, image_set)
         self.coco = COCO(osp.join(root, ANNOTATIONS,
                                   INSTANCES_SET.format(image_set)))
-        self.ids = list(self.coco.imgToAnns.keys())
+
+        # self.ids = list(self.coco.imgToAnns.keys())
+        # solo entrenamos sobre 'person' de COCO
+        catIds = self.coco.getCatIds(catNms=['person'])
+        imgIds = self.coco.getImgIds(catIds=catIds)
+        self.ids = imgIds
+
         self.transform = transform
         self.target_transform = target_transform
         self.name = dataset_name
