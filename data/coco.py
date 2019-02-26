@@ -1,4 +1,5 @@
 # from .config import HOME
+import time
 import os
 import os.path as osp
 import sys
@@ -127,8 +128,13 @@ class COCODetection(data.Dataset):
         path = osp.join(self.root, self.coco.loadImgs(img_id)[0]['file_name'])
 
         # assert osp.exists(path), 'Image path does not exist: {}'.format(path)
-        if not osp.exists(path):
-            return ([], [], 0, 0)
+        retry = 0
+        while(not(osp.exists(path))):
+            print("Retrying {}...".format(path))
+            time.sleep(1)
+            retry += 1
+            if retry > 10:
+                assert osp.exists(path), 'Image path does not exist: {}'.format(path)
 
         img = cv2.imread(osp.join(self.root, path))
         height, width, _ = img.shape
