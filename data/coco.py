@@ -138,7 +138,7 @@ class COCODetection(data.Dataset):
         loaded_img = 0
         if not osp.exists(path):
             img = np.zeros((400, 600, 3), np.uint8)
-            print("Imagen ZERO creada...")
+            # print("Imagen ZERO creada...")
             zero_img += 1
         else:
             img = cv2.imread(osp.join(self.root, path))
