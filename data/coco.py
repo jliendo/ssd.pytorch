@@ -1,4 +1,4 @@
-from .config import HOME
+# from .config import HOME
 import os
 import os.path as osp
 import sys
@@ -8,7 +8,9 @@ import torchvision.transforms as transforms
 import cv2
 import numpy as np
 
-COCO_ROOT = osp.join(HOME, 'data/coco/')
+# asume que el script corre desde el directorio ssd.pytorch
+COCO_ROOT = "./data/"
+
 IMAGES = 'images'
 ANNOTATIONS = 'annotations'
 COCO_API = 'PythonAPI'
