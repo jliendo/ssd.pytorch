@@ -27,6 +27,8 @@ parser.add_argument('--dataset', default='VOC', choices=['VOC', 'COCO'],
                     type=str, help='VOC or COCO')
 parser.add_argument('--dataset_root', default=VOC_ROOT,
                     help='Dataset root directory path')
+parser.add_argument('--image_set', default='train2014',
+                    help='COCO image set')
 parser.add_argument('--basenet', default='vgg16_reducedfc.pth',
                     help='Pretrained base model')
 parser.add_argument('--batch_size', default=32, type=int,
@@ -78,6 +80,7 @@ def train():
             args.dataset_root = COCO_ROOT
         cfg = coco
         dataset = COCODetection(root=args.dataset_root,
+                                image_set=args.image_set,
                                 transform=SSDAugmentation(cfg['min_dim'],
                                                           MEANS))
     elif args.dataset == 'VOC':
