@@ -137,7 +137,7 @@ class COCODetection(data.Dataset):
         retry = 0
         while(not(osp.exists(path))):
             print("Retrying {}...".format(path))
-            time.sleep(1)
+            time.sleep(10)
             retry += 1
             if retry > 10:
                 assert osp.exists(path), 'Image path does not exist: {}'.format(path)
